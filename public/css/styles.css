@@ -1,0 +1,23 @@
+/* Custom Styles */
+body {
+    padding-top: 56px; /* Adjust based on fixed navbar height */
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+body.page-loaded {
+    opacity: 1;
+}
+
+/* Ensure elements within the body don't cause overflow during transition */
+.container-fluid, .container {
+    overflow-x: hidden;
+}
+
+/* Sidebar Styles */
+/* ... (existing sidebar styles if any) ... */
+
+/* Dark Mode Toggle Styles */
+/* ... (existing dark mode styles) ... */
+
+/* Add any other custom styles below */ 

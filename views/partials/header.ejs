@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container-fluid">
+        <button class="btn btn-primary d-md-none me-3" id="sidebarToggle">☰</button> <!-- Simple text toggle for smaller screens -->
+        <a class="navbar-brand" href="/">Grading System</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mt-2 mt-lg-0 align-items-center">
+                <!-- Dark Mode Toggle -->
+                <li class="nav-item me-2">
+                    <button class="btn btn-sm btn-outline-secondary" id="darkModeToggle" title="Toggle Dark Mode">
+                        <i class="fas fa-moon"></i><span class="d-none d-lg-inline ms-1">Toggle Mode</span> <!-- Changed Text -->
+                    </button>
+                </li>
+                <!-- End Dark Mode Toggle -->
+
+                <% if (user) { %>
+                    <li class="nav-item"><span class="navbar-text me-3">Welcome, <%= user.username %></span></li>
+                    <li class="nav-item"><a class="btn btn-outline-danger" href="/auth/logout">Logout</a></li>
+                <% } else { %>
+                    <li class="nav-item"><a class="btn btn-outline-success" href="/auth/login">Login</a></li>
+                    <li class="nav-item"><a class="btn btn-outline-primary ms-2" href="/auth/register">Register</a></li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</nav> 

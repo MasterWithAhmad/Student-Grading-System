@@ -1,0 +1,103 @@
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Dashboard</h1>
+    
+    <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-danger" role="alert"><%= error %></div>
+    <% } %>
+
+    <!-- Stats Cards -->
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body"><i class="fas fa-user-graduate me-2"></i>Students</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <span class="large text-white"><%= stats ? stats.students : 'N/A' %> Registered</span>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+                 <a class="stretched-link" href="/students"></a> <!-- Make card clickable -->
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body"><i class="fas fa-book me-2"></i>Courses</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                     <span class="large text-white"><%= stats ? stats.courses : 'N/A' %> Available</span>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+                 <a class="stretched-link" href="/courses"></a> <!-- Make card clickable -->
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+             <!-- Grades Card -->
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body"><i class="fas fa-graduation-cap me-2"></i>Grades Recorded</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                     <span class="large text-white"><%= stats ? stats.grades : 'N/A' %> Entries</span>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+                 <a class="stretched-link" href="/grades"></a>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+             <!-- Average Grade Card -->
+             <div class="card bg-danger text-white mb-4">
+                <div class="card-body"><i class="fas fa-calculator me-2"></i>Overall Average</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                     <span class="large text-white"><%= stats ? stats.average : 'N/A' %> %</span>
+                    <!-- Link could go to reports -->
+                     <div class="small text-white"><i class="fas fa-angle-right"></i></div> 
+                </div>
+                 <a class="stretched-link" href="/reports"></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Placeholder for charts removed, use Reports page -->
+
+     <!-- Recent Grades Table -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    Recently Added Grades
+                </div>
+                <div class="card-body">
+                     <div class="table-responsive">
+                        <table class="table table-sm table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Course</th>
+                                    <th>Assignment</th>
+                                    <th>Grade</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (recentGrades && recentGrades.length > 0) { %>
+                                    <% recentGrades.forEach(grade => { %>
+                                        <tr>
+                                            <td><%= grade.student_name %></td>
+                                            <td><%= grade.course_name %></td>
+                                            <td><%= grade.assignment_name || '-' %></td>
+                                            <td><%= grade.grade %></td>
+                                            <td><%= new Date(grade.date_assigned).toLocaleDateString() %></td>
+                                        </tr>
+                                    <% }) %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="5" class="text-center">No recent grades found.</td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-end">
+                        <a href="/grades">View All Grades &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

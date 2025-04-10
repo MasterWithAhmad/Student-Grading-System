@@ -1,0 +1,187 @@
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Reports</h1>
+    <p>Visual summaries of student and course performance.</p>
+
+    <!-- Report Widgets/Charts -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-pie me-1"></i> Overall Grade Distribution
+                </div>
+                <div class="card-body">
+                    <canvas id="overallGradeDistChart"></canvas>
+                    <% if (!gradeDistributionData || !gradeDistributionData.labels || gradeDistributionData.labels.length === 0) { %>
+                        <p class="text-center small mt-2 text-muted">No grade data available for distribution chart.</p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar me-1"></i> Average Grade per Course
+                </div>
+                <div class="card-body">
+                    <canvas id="avgGradePerCourseChart"></canvas>
+                     <% if (!avgGradePerCourseData || !avgGradePerCourseData.labels || avgGradePerCourseData.labels.length === 0) { %>
+                        <p class="text-center small mt-2 text-muted">No course average data available for chart.</p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+         <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-clipboard-list me-1"></i> Student Performance Overview
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="studentPerformanceTable" class="table table-striped table-bordered table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Student Name</th>
+                                    <th>Courses w/ Grades</th>
+                                    <th>Overall Average Grade</th>
+                                    <!-- Add more columns if needed -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (studentPerformanceData && studentPerformanceData.length > 0) { %>
+                                    <% studentPerformanceData.forEach(student => { %>
+                                        <tr>
+                                            <td><%= student.student_name %></td>
+                                            <td><%= student.courses_count %></td>
+                                            <td><%= student.average_grade %></td>
+                                            <!-- Add more cells if needed -->
+                                        </tr>
+                                    <% }) %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted">No student performance data available.</td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Chart Initialization Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if Chart object exists
+        if (typeof Chart !== 'undefined') { 
+
+            // Overall Grade Distribution (Pie Chart)
+            const ctx1 = document.getElementById('overallGradeDistChart');
+            const gradeDistData = <%- JSON.stringify(gradeDistributionData || {labels: [], data: []}) %>;
+            if (ctx1 && gradeDistData.labels.length > 0) {
+                new Chart(ctx1.getContext('2d'), {
+                    type: 'pie',
+                    data: {
+                        labels: gradeDistData.labels,
+                        datasets: [{
+                            label: 'Grade Distribution',
+                            data: gradeDistData.data,
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 0.6)', // A
+                                'rgba(54, 162, 235, 0.6)', // B
+                                'rgba(255, 206, 86, 0.6)', // C
+                                'rgba(255, 159, 64, 0.6)', // D
+                                'rgba(255, 99, 132, 0.6)'  // F
+                            ],
+                            borderColor: [
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(255, 99, 132, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Overall Grade Distribution'
+                            }
+                        }
+                    }
+                });
+            } else if (ctx1) {
+                // Optional: Display message directly on canvas if no data
+                const context = ctx1.getContext('2d');
+                context.textAlign = 'center';
+                context.fillText('No data available', ctx1.width / 2, ctx1.height / 2);
+            }
+
+            // Average Grade per Course (Bar Chart)
+            const ctx2 = document.getElementById('avgGradePerCourseChart');
+            const avgGradeData = <%- JSON.stringify(avgGradePerCourseData || {labels: [], data: []}) %>;
+            if (ctx2 && avgGradeData.labels.length > 0) {
+                new Chart(ctx2.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: avgGradeData.labels,
+                        datasets: [{
+                            label: 'Average Grade',
+                            data: avgGradeData.data,
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100
+                            }
+                        },
+                         plugins: {
+                            legend: {
+                               display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'Average Grade per Course'
+                            }
+                        }
+                    }
+                });
+            } else if (ctx2) {
+                 // Optional: Display message directly on canvas if no data
+                const context = ctx2.getContext('2d');
+                context.textAlign = 'center';
+                context.fillText('No data available', ctx2.width / 2, ctx2.height / 2);
+            }
+        } else {
+            console.error('Chart.js not loaded, cannot initialize charts.');
+        }
+
+        // --- DataTables Initialization for Performance Table ---
+        if (typeof $ !== 'undefined' && $.fn.DataTable) {
+            new DataTable('#studentPerformanceTable', {
+                 responsive: true,
+                 // Order by average grade descending by default
+                 order: [[ 2, 'desc' ]]
+            });
+        } else {
+            console.error('DataTables or jQuery not loaded, cannot initialize performance table.');
+        }
+    });
+</script> 

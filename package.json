@@ -1,0 +1,26 @@
+{
+  "name": "student-grading-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "npx nodemon app.js",
+    "seed": "node seed.js"
+  },
+  "keywords": [],
+  "dependencies": {
+    "async": "^3.2.6",
+    "bcrypt": "^5.1.1",
+    "connect-flash": "^0.1.1",
+    "connect-sqlite3": "^0.9.15",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.1",
+    "json2csv": "^6.0.0-alpha.2",
+    "sqlite3": "^5.1.7"
+  }
+}

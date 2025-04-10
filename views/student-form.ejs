@@ -1,0 +1,57 @@
+<div class="container-fluid px-4">
+    <h1 class="mt-4"><%= title %></h1>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+    <% } %>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            Student Details
+        </div>
+        <div class="card-body">
+            <form action="<%= action %>" method="POST" class="needs-validation" novalidate>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="first_name" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" value="<%= student ? student.first_name : '' %>" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="last_name" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" value="<%= student ? student.last_name : '' %>" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" name="email" value="<%= student ? student.email : '' %>" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else. (Optional)</div>
+                </div>
+                <div class="mb-3">
+                    <label for="date_of_birth" class="form-label">Date of Birth</label>
+                    <input type="text" class="form-control" id="date_of_birth" name="date_of_birth" value="<%= student && student.dob_formatted ? student.dob_formatted : '' %>">
+                </div>
+                
+                <button type="submit" class="btn btn-primary me-2">Save Student</button>
+                <a href="/students" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div> 
+
+<!-- Initialize flatpickr -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof flatpickr !== 'undefined') {
+        flatpickr("#date_of_birth", {
+            altInput: true, // Show a user-friendly format
+            altFormat: "F j, Y", // Format displayed to user
+            dateFormat: "Y-m-d", // Format sent to server (matches SQL date)
+            allowInput: true // Allow typing dates directly
+        });
+    } else {
+        console.error('flatpickr not loaded.');
+    }
+});
+</script> 

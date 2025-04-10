@@ -1,0 +1,12 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-1 text-danger"><%= error && error.status ? error.status : 'Error' %></h1>
+            <h2 class="mb-4"><%= message %></h2>
+            <% if (error && error.stack && process.env.NODE_ENV !== 'production') { %>
+                <pre class="text-start bg-light p-3 rounded"><code style="white-space: pre-wrap;"><%= error.stack %></code></pre>
+            <% } %>
+            <a href="/" class="btn btn-primary mt-4">Go to Dashboard</a>
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,183 @@
+/* Add custom styles here */
+
+/* Basic Sidebar Styling (adjust as needed) */
+#wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+    margin-left: -15rem; /* Adjust width as needed */
+    transition: margin 0.25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+    width: 15rem; /* Adjust width as needed */
+}
+
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+
+/* Adjust page content width when sidebar is toggled */
+@media (min-width: 768px) { /* Apply only on medium screens and up */
+    #sidebar-wrapper {
+        margin-left: 0;
+    }
+
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: -15rem; /* Adjust width as needed */
+    }
+}
+
+/* --- Dark Mode --- */
+body.dark-mode {
+    background-color: #212529; /* Bootstrap dark background */
+    color: #dee2e6; /* Bootstrap light text */
+}
+
+body.dark-mode .bg-light {
+    background-color: #343a40 !important; /* Darker background for light elements */
+    color: #f8f9fa;
+}
+
+body.dark-mode .border-bottom,
+body.dark-mode .border-end {
+    border-color: #495057 !important; /* Darker borders */
+}
+
+body.dark-mode .list-group-item {
+    background-color: #343a40;
+    border-color: #495057;
+    color: #f8f9fa;
+}
+
+body.dark-mode .list-group-item-action:hover,
+body.dark-mode .list-group-item-action:focus {
+    background-color: #495057; /* Slightly lighter on hover */
+}
+
+body.dark-mode .card {
+    background-color: #343a40;
+    border-color: #495057;
+}
+
+body.dark-mode .card-header {
+    background-color: #495057;
+    border-bottom-color: #495057;
+}
+
+body.dark-mode .table {
+    color: #dee2e6;
+    border-color: #495057;
+}
+
+body.dark-mode .table-striped tbody tr:nth-of-type(odd) > * {
+    background-color: rgba(255, 255, 255, 0.03); /* Subtle striping */
+}
+
+body.dark-mode .table-hover tbody tr:hover > * {
+   background-color: rgba(255, 255, 255, 0.06); /* Subtle hover */
+}
+
+body.dark-mode .table-light {
+    background-color: #495057 !important;
+    color: #f8f9fa;
+    border-color: #495057;
+}
+
+body.dark-mode .table-bordered {
+    border-color: #495057;
+}
+
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background-color: #495057;
+    color: #dee2e6;
+    border-color: #6c757d;
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus {
+    background-color: #495057;
+    color: #dee2e6;
+    border-color: #86b7fe; /* Bootstrap focus blue */
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+body.dark-mode .form-text {
+    color: #adb5bd; /* Lighter muted text */
+}
+
+/* Tom Select dark mode adjustments */
+body.dark-mode .ts-control {
+     background-color: #495057 !important;
+     border-color: #6c757d !important;
+     color: #dee2e6;
+}
+body.dark-mode .ts-dropdown {
+    background: #343a40;
+    border-color: #6c757d;
+}
+body.dark-mode .ts-dropdown .option {
+     color: #dee2e6;
+}
+body.dark-mode .ts-dropdown .active {
+    background-color: #0d6efd; /* Bootstrap primary */
+    color: white;
+}
+body.dark-mode .ts-dropdown .create {
+    color: #adb5bd;
+}
+
+/* Flatpickr dark mode adjustments */
+body.dark-mode .flatpickr-calendar {
+    background: #343a40;
+    border-color: #495057;
+}
+body.dark-mode .flatpickr-day {
+    color: #dee2e6;
+}
+body.dark-mode .flatpickr-day:hover {
+    background: #495057;
+}
+body.dark-mode .flatpickr-day.selected {
+    background: #0d6efd;
+    border-color: #0d6efd;
+    color: white;
+}
+body.dark-mode .flatpickr-day.today {
+    border-color: #6c757d;
+}
+body.dark-mode .flatpickr-day.flatpickr-disabled,
+body.dark-mode .flatpickr-day.prevMonthDay,
+body.dark-mode .flatpickr-day.nextMonthDay {
+    color: rgba(222, 226, 230, 0.4);
+}
+body.dark-mode .flatpickr-weekday {
+    color: #adb5bd;
+}
+body.dark-mode .flatpickr-month,
+body.dark-mode .flatpickr-current-month .flatpickr-monthDropdown-months,
+body.dark-mode .numInputWrapper .numInput {
+    color: #dee2e6;
+}
+body.dark-mode .flatpickr-months .flatpickr-prev-month,
+body.dark-mode .flatpickr-months .flatpickr-next-month {
+    fill: #dee2e6;
+} 

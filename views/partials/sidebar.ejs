@@ -1,0 +1,23 @@
+<div class="bg-light border-end" id="sidebar-wrapper">
+    <div class="sidebar-heading border-bottom bg-light"><i class="fas fa-compass me-2"></i>Navigation</div>
+    <div class="list-group list-group-flush">
+        <a class="list-group-item list-group-item-action list-group-item-light p-3 <%= currentPath === '/' ? 'active' : '' %>" href="/">
+            <i class="fas fa-tachometer-alt fa-fw me-2"></i>Dashboard
+        </a>
+        <!-- Add more links as needed -->
+        <% if (user) { %>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 <%= currentPath.startsWith('/students') ? 'active' : '' %>" href="/students">
+                 <i class="fas fa-user-graduate fa-fw me-2"></i>Students
+            </a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 <%= currentPath.startsWith('/courses') ? 'active' : '' %>" href="/courses">
+                 <i class="fas fa-book fa-fw me-2"></i>Courses
+            </a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 <%= currentPath.startsWith('/grades') ? 'active' : '' %>" href="/grades">
+                 <i class="fas fa-graduation-cap fa-fw me-2"></i>Grades
+            </a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 <%= currentPath.startsWith('/reports') ? 'active' : '' %>" href="/reports">
+                 <i class="fas fa-chart-pie fa-fw me-2"></i>Reports
+            </a>
+        <% } %>
+    </div>
+</div> 
