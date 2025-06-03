@@ -100,11 +100,6 @@ A web application for managing student records, courses, and grades, featuring a
 *   Student List:
     ![](screenshots/students.png)
 
-*   Add/Edit Student Form:
-    `[Screenshot of Student Form]`
-
-*   Course List:
-    `[Screenshot of Course List]`
 
 *   Grade List:
     ![](screenshots/grades.png)
