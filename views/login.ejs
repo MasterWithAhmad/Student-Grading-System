@@ -5,7 +5,7 @@
     <div class="card-body p-4">
         <% if (typeof error !== 'undefined' && error && error.length > 0) { %>
             <div class="alert alert-danger" role="alert">
-                 <%= error.join('<br>') %>
+                 <%= Array.isArray(error) ? error.join('<br>') : error %>
             </div>
         <% } %>
         <form action="/auth/login" method="POST" class="needs-validation" novalidate>

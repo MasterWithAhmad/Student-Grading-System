@@ -9,6 +9,7 @@ const studentRoutes = require('./routes/studentRoutes'); // Import student route
 const courseRoutes = require('./routes/courseRoutes'); // Import course routes
 const gradeRoutes = require('./routes/gradeRoutes'); // Import grade routes
 const reportRoutes = require('./routes/reportRoutes'); // Import report routes
+const settingsRoutes = require('./routes/settingsRoutes'); // Import settings routes
 const { isAuthenticated } = require('./middleware/authMiddleware'); // Import auth middleware
 const dashboardController = require('./controllers/dashboardController'); // Import dashboard controller
 const flash = require('connect-flash'); // Require connect-flash
@@ -72,6 +73,7 @@ app.use('/students', isAuthenticated, studentRoutes);
 app.use('/courses', isAuthenticated, courseRoutes);
 app.use('/grades', isAuthenticated, gradeRoutes);
 app.use('/reports', isAuthenticated, reportRoutes);
+app.use('/settings', isAuthenticated, settingsRoutes);
 
 // --- Server Start ---
 app.listen(PORT, () => {

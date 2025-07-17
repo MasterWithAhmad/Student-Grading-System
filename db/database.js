@@ -96,6 +96,21 @@ function initializeDatabase() {
                 console.log('Database schema initialized successfully.');
             }
         });
+
+        // User Settings Table
+        const createUserSettingsTable = `
+        CREATE TABLE IF NOT EXISTS user_settings (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            setting_key TEXT NOT NULL,
+            setting_value TEXT,
+            FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+            UNIQUE (user_id, setting_key)
+        );
+        `;
+        db.run(createUserSettingsTable, (err) => {
+            if (err) console.error("Error creating user_settings table:", err.message);
+        });
     });
 }
 

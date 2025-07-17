@@ -1,0 +1,33 @@
+<div class="container mt-4">
+    <h1>Settings</h1>
+    <% if (success && success.length > 0) { %>
+        <div class="alert alert-success"><%= success %></div>
+    <% } %>
+    <% if (error && error.length > 0) { %>
+        <div class="alert alert-danger"><%= error %></div>
+    <% } %>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <strong>Profile Management</strong>
+        </div>
+        <div class="card-body">
+            <form action="/settings/profile" method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" value="<%= user.username %>" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <strong>Preferences (Coming Soon)</strong>
+        </div>
+        <div class="card-body">
+            <p class="text-muted">More settings will be available here soon.</p>
+        </div>
+    </div>
+</div> 
