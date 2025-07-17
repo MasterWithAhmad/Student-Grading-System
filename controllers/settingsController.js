@@ -1,5 +1,6 @@
 const userModel = require('../models/userModel');
 const userSettingsModel = require('../models/userSettingsModel');
+const bcrypt = require('bcrypt');
 
 // Render the settings page with user profile and settings
 function showSettingsPage(req, res) {
@@ -24,21 +25,43 @@ function showSettingsPage(req, res) {
     });
 }
 
-// Handle profile update
+// Handle profile update (username and password)
 function updateProfile(req, res) {
     const userId = req.session.user.id;
-    const { username } = req.body;
+    const { username, password, confirmPassword } = req.body;
+    // Validate password match (should be handled client-side, but double-check)
+    if (password && password !== confirmPassword) {
+        req.flash('error', 'Passwords do not match.');
+        return res.redirect('/settings');
+    }
+    // Update username
     userModel.updateUserProfile(userId, { username }, (err, changes) => {
         if (err) {
             req.flash('error', 'Failed to update profile. Username may already be taken.');
-        } else if (changes === 0) {
-            req.flash('error', 'No changes made to profile.');
+            return res.redirect('/settings');
+        }
+        // If password provided, hash and update
+        if (password) {
+            bcrypt.hash(password, 10, (err, hashedPassword) => {
+                if (err) {
+                    req.flash('error', 'Failed to update password.');
+                    return res.redirect('/settings');
+                }
+                userModel.updateUserPassword(userId, hashedPassword, (err2) => {
+                    if (err2) {
+                        req.flash('error', 'Failed to update password.');
+                    } else {
+                        req.flash('success', 'Profile and password updated successfully!');
+                        req.session.user.username = username;
+                    }
+                    return res.redirect('/settings');
+                });
+            });
         } else {
             req.flash('success', 'Profile updated successfully!');
-            // Update session username if changed
             req.session.user.username = username;
+            return res.redirect('/settings');
         }
-        res.redirect('/settings');
     });
 }
 

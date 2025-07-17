@@ -86,9 +86,24 @@ function updateUserProfile(id, updates, callback) {
     });
 }
 
+/**
+ * Updates a user's password by ID.
+ * @param {number} id - The user ID.
+ * @param {string} hashedPassword - The new hashed password.
+ * @param {function(Error|null, number|null)} callback - Callback with error or number of changes.
+ */
+function updateUserPassword(id, hashedPassword, callback) {
+    const sql = 'UPDATE users SET password = ? WHERE id = ?';
+    db.run(sql, [hashedPassword, id], function(err) {
+        if (err) return callback(err, null);
+        callback(null, this.changes);
+    });
+}
+
 module.exports = {
     findUserByUsername,
     createUser,
     findUserById,
-    updateUserProfile
+    updateUserProfile,
+    updateUserPassword
 }; 
