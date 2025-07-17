@@ -1,15 +1,23 @@
 /* Add custom styles here */
 
 /* Basic Sidebar Styling (adjust as needed) */
+#sidebar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    min-height: 100vh;
+    width: 15rem; /* Match the width used in .list-group */
+    margin-left: -15rem; /* Adjust width as needed */
+    transition: margin 0.25s ease-out;
+    z-index: 1030; /* Ensure it stays above content */
+}
+
 #wrapper {
     display: flex;
     align-items: stretch;
-}
-
-#sidebar-wrapper {
-    min-height: 100vh;
-    margin-left: -15rem; /* Adjust width as needed */
-    transition: margin 0.25s ease-out;
+    /* Add left padding to account for fixed sidebar */
+    padding-left: 0;
 }
 
 #sidebar-wrapper .sidebar-heading {
@@ -23,6 +31,8 @@
 
 #page-content-wrapper {
     min-width: 100vw;
+    margin-left: 0;
+    transition: margin 0.25s ease-out;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -30,18 +40,20 @@
 }
 
 /* Adjust page content width when sidebar is toggled */
-@media (min-width: 768px) { /* Apply only on medium screens and up */
+@media (min-width: 768px) {
     #sidebar-wrapper {
         margin-left: 0;
     }
-
     #page-content-wrapper {
         min-width: 0;
         width: 100%;
+        margin-left: 15rem; /* Add margin to prevent content from being hidden */
     }
-
     #wrapper.toggled #sidebar-wrapper {
-        margin-left: -15rem; /* Adjust width as needed */
+        margin-left: -15rem;
+    }
+    #wrapper.toggled #page-content-wrapper {
+        margin-left: 0;
     }
 }
 
