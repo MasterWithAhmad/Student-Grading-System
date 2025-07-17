@@ -44,7 +44,51 @@ function createUser(username, hashedPassword, role = 'teacher', callback) {
     });
 }
 
+/**
+ * Finds a user by their ID asynchronously.
+ * @param {number} id - The user ID to search for.
+ * @param {function(Error|null, object|null)} callback - The callback function.
+ */
+function findUserById(id, callback) {
+    const sql = 'SELECT * FROM users WHERE id = ?';
+    db.get(sql, [id], (err, row) => {
+        if (err) {
+            console.error('Error finding user by ID:', err);
+            return callback(err, null);
+        }
+        callback(null, row || null);
+    });
+}
+
+/**
+ * Updates a user's profile (username, role) by ID.
+ * @param {number} id - The user ID.
+ * @param {object} updates - The fields to update (username, role).
+ * @param {function(Error|null, number|null)} callback - Callback with error or number of changes.
+ */
+function updateUserProfile(id, updates, callback) {
+    const fields = [];
+    const values = [];
+    if (updates.username) {
+        fields.push('username = ?');
+        values.push(updates.username);
+    }
+    if (updates.role) {
+        fields.push('role = ?');
+        values.push(updates.role);
+    }
+    if (fields.length === 0) return callback(null, 0);
+    values.push(id);
+    const sql = `UPDATE users SET ${fields.join(', ')} WHERE id = ?`;
+    db.run(sql, values, function(err) {
+        if (err) return callback(err, null);
+        callback(null, this.changes);
+    });
+}
+
 module.exports = {
     findUserByUsername,
-    createUser
+    createUser,
+    findUserById,
+    updateUserProfile
 }; 
