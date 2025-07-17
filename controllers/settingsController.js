@@ -79,8 +79,54 @@ function updateSetting(req, res) {
     });
 }
 
+// Factory Reset: delete all user data except account
+function factoryReset(req, res) {
+    const userId = req.session.user.id;
+    const { factoryResetConfirm } = req.body;
+    if (!factoryResetConfirm || factoryResetConfirm.trim().toUpperCase() !== 'RESET') {
+        req.flash('error', 'You must type RESET to confirm factory reset.');
+        return res.redirect('/settings');
+    }
+    const db = require('../db/database').db;
+    db.serialize(() => {
+        db.run('DELETE FROM grades WHERE user_id = ?', [userId]);
+        db.run('DELETE FROM courses WHERE user_id = ?', [userId]);
+        db.run('DELETE FROM students WHERE user_id = ?', [userId]);
+        db.run('DELETE FROM user_settings WHERE user_id = ?', [userId], (err) => {
+            if (err) {
+                req.flash('error', 'Failed to perform factory reset.');
+            } else {
+                req.flash('success', 'Factory reset successful. All your data except your account has been deleted.');
+            }
+            res.redirect('/settings');
+        });
+    });
+}
+
+// Delete Account: delete user and all related data
+function deleteAccount(req, res) {
+    const userId = req.session.user.id;
+    const { deleteAccountConfirm } = req.body;
+    if (!deleteAccountConfirm || deleteAccountConfirm.trim().toUpperCase() !== 'DELETE') {
+        req.flash('error', 'You must type DELETE to confirm account deletion.');
+        return res.redirect('/settings');
+    }
+    const db = require('../db/database').db;
+    db.run('DELETE FROM users WHERE id = ?', [userId], function(err) {
+        if (err) {
+            req.flash('error', 'Failed to delete account.');
+            return res.redirect('/settings');
+        }
+        req.session.destroy(() => {
+            res.redirect('/auth/login');
+        });
+    });
+}
+
 module.exports = {
     showSettingsPage,
     updateProfile,
-    updateSetting
+    updateSetting,
+    factoryReset,
+    deleteAccount
 }; 

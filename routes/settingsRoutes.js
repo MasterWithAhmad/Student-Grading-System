@@ -12,4 +12,9 @@ router.post('/profile', isAuthenticated, settingsController.updateProfile);
 // Update a user setting (e.g., theme)
 router.post('/setting', isAuthenticated, settingsController.updateSetting);
 
+// Factory Reset
+router.post('/factory-reset', isAuthenticated, settingsController.factoryReset);
+// Delete Account
+router.post('/delete-account', isAuthenticated, settingsController.deleteAccount);
+
 module.exports = router; 
